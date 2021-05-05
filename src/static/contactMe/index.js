@@ -9,7 +9,8 @@ const contactMeContent = {
         },
         toastMessages: {
             success: 'Message Sent Successfully🎉',
-            error: 'Message Sent Failed❌ Please try again or contact me via social media below'
+            error: 'Message Sent Failed❌ Please try again or contact me via social media below',
+            invalidEmail: 'Please enter a valid email address📧'
         }
     },
     socialMedia: [

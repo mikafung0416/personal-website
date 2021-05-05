@@ -24,17 +24,27 @@ const ContactForm = (props) => {
         removeClass('name-label', 'focus');
         removeClass('email-label', 'focus');
     }
+    const validateEmail = () => {
+        const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if (!regex.test(input.email)) {
+            toast.error(toastMessages.invalidEmail);
+            return false;
+        }
+        return true;
+    }
     const handleSubmit = (e) => {
         e.preventDefault();
-        addClass('submitBtn', 'btn-spinner');
-        emailjs.send(process.env.REACT_APP_EMAILJS_SERVICE_ID, process.env.REACT_APP_EMAILJS_TEMPLATE_ID, input, process.env.REACT_APP_EMAILJS_USER_ID).then((res) => {
-            toast.success(toastMessages.success);
-            resetForm();
-        }, (err) => {
-            toast.error(toastMessages.error);
-        }).then((res) => {
-            removeClass('submitBtn', 'btn-spinner');
-        })
+        if (validateEmail()) {
+            addClass('submitBtn', 'btn-spinner');
+            emailjs.send(process.env.REACT_APP_EMAILJS_SERVICE_ID, process.env.REACT_APP_EMAILJS_TEMPLATE_ID, input, process.env.REACT_APP_EMAILJS_USER_ID).then((res) => {
+                toast.success(toastMessages.success);
+                resetForm();
+            }, (err) => {
+                toast.error(toastMessages.error);
+            }).then((res) => {
+                removeClass('submitBtn', 'btn-spinner');
+            })
+        }
     }
     const addClass = (elm, cls) => {
         document.getElementById(elm).classList.add(cls);
